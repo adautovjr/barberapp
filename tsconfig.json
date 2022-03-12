@@ -18,7 +18,9 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@config/*": ["./src/config/*"]
+      "@config/*": ["./src/config/*"],
+      "@resolvers/*": ["./src/resolvers/*"],
+      "@type/*": ["./src/type/*"]
     }
   },
   "include": [
