@@ -1,20 +1,26 @@
 import express from 'express'
 import { graphqlHTTP } from 'express-graphql'
 import { makeExecutableSchema } from '@graphql-tools/schema'
+import { loadSchemaSync } from '@graphql-tools/load'
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { PrismaClient } from '@prisma/client'
 import resolvers from '@resolvers/index'
-import typeDefs from '@type/index'
+import { join } from 'path'
 
-export const schema = makeExecutableSchema({
+const schema = loadSchemaSync(join(__dirname, 'config/schema.graphql'), {
+  loaders: [new GraphQLFileLoader()]
+})
+
+export const executableSchema = makeExecutableSchema({
   resolvers,
-  typeDefs,
+  typeDefs: schema,
 })
 
 export const prisma = new PrismaClient()
 const app = express()
 
 app.use('/graphql', graphqlHTTP({
-  schema,
+  schema: executableSchema,
   graphiql: true,
   context: {
     prisma,
