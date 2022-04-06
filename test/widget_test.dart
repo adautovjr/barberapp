@@ -9,11 +9,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:barber_flutter/main.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    await initHiveForFlutter();
+
+    final HttpLink httpLink = HttpLink(
+      'http://localhost:3000/graphql',
+    );
+
+    final AuthLink authLink = AuthLink(
+      getToken: () async => 'Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    );
+
+    final Link link = authLink.concat(httpLink);
+
+    ValueNotifier<GraphQLClient> client = ValueNotifier(
+      GraphQLClient(
+        link: link,
+        // The default store is the InMemoryStore, which does NOT persist to disk
+        cache: GraphQLCache(store: HiveStore()),
+      ),
+    );
+
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(BarberApp(client: client));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
