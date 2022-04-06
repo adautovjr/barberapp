@@ -6,6 +6,7 @@ import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { PrismaClient } from '@prisma/client'
 import resolvers from '@resolvers/index'
 import { join } from 'path'
+import cors from 'cors'
 
 const schema = loadSchemaSync(join(__dirname, 'config/schema.graphql'), {
   loaders: [new GraphQLFileLoader()]
@@ -18,6 +19,8 @@ export const executableSchema = makeExecutableSchema({
 
 export const prisma = new PrismaClient()
 const app = express()
+
+app.use(cors())
 
 app.use('/graphql', graphqlHTTP({
   schema: executableSchema,
