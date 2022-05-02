@@ -19,7 +19,9 @@ class _UsersScreenState extends State<UsersScreen> {
       ),
       drawer: const Menu(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed('/user/create');
+        },
         child: const Icon(Icons.add),
       ),
       body: Query(

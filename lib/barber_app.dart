@@ -1,6 +1,8 @@
+import 'package:barber_flutter/widgets/templates/cupertino.dart';
+import 'package:barber_flutter/widgets/templates/material.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:barber_flutter/routes.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class BarberApp extends StatefulWidget {
   ValueNotifier<GraphQLClient> client;
@@ -19,16 +21,23 @@ class MyApp extends State<BarberApp> {
 
   @override
   Widget build(BuildContext context) {
+    // if (UniversalPlatform.isAndroid) {
+    //   debugPrint("Android");
+    //   return GraphQLProvider(
+    //     client: widget.client,
+    //     child: materialWidget(context, 'Hi Android with Material!'),
+    //   );
+    // } else if (UniversalPlatform.isIOS) {
+    //   debugPrint("isIOS");
+    //   return GraphQLProvider(
+    //     client: widget.client,
+    //     child: cupertinoWidget(context, 'Hi iOS with Material!'),
+    //   );
+    // }
+    debugPrint("Web");
     return GraphQLProvider(
       client: widget.client,
-      child: MaterialApp(
-        title: 'Barber App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        initialRoute: '/',
-        routes: routes,
-      ),
+      child: materialWidget(context, 'Hi Web!'),
     );
   }
 }

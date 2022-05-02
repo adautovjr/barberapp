@@ -9,7 +9,7 @@ class Menu extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
+          const DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.blue,
             ),
@@ -22,22 +22,22 @@ class Menu extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.supervisor_account_rounded),
-            title: Text('Users'),
+            leading: const Icon(Icons.supervisor_account_rounded),
+            title: const Text('Users'),
             onTap: () {
               Navigator.of(context).pushNamed('/users');
             },
           ),
           ListTile(
-            leading: Icon(Icons.content_cut_rounded),
-            title: Text('Services'),
+            leading: const Icon(Icons.content_cut_rounded),
+            title: const Text('Services'),
             onTap: () {
               Navigator.of(context).pushNamed('/services');
             },
           ),
           ListTile(
-            leading: Icon(Icons.calendar_today_rounded),
-            title: Text('Requests'),
+            leading: const Icon(Icons.calendar_today_rounded),
+            title: const Text('Requests'),
             onTap: () {
               Navigator.of(context).pushNamed('/requests');
             },

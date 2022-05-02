@@ -19,7 +19,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
       ),
       drawer: const Menu(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed('/service/create');
+        },
         child: const Icon(Icons.add),
       ),
       body: Query(
