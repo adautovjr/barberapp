@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "lib": ["es6"],
+    "target": "es2018",
     "module": "commonjs",
+    "lib": ["es2018", "esnext.asynciterable"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
     "rootDir": "./src",
     "typeRoots": [
       "./node_modules/@types",
@@ -20,7 +23,8 @@
     "paths": {
       "@config/*": ["./src/config/*"],
       "@resolvers/*": ["./src/resolvers/*"],
-      "@type/*": ["./src/type/*"]
+      "@type/*": ["./src/type/*"],
+      "@generated": ["./src/prisma/generated/type-graphql"],
     }
   },
   "include": [

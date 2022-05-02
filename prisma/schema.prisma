@@ -5,6 +5,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output   = "../src/prisma/generated/type-graphql"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -17,37 +22,47 @@ enum Role {
 }
 
 model User {
-  id               Int       @id @default(autoincrement())
+  id               String    @id @default(cuid())
   role             Role
   name             String
   email            String?   @unique
   phone            String?
   requestsAsBarber Request[] @relation("barber")
   requestsAsClient Request[] @relation("client")
+  services         Service[] @relation("servicesAsBarber")
+  tokens           Token[]   @relation("tokens")
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
 }
 
 model Service {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(cuid())
   name      String
   price     Decimal
   duration  Int
-  Request   Request[]
+  requests  Request[]
+  barbers   User[]    @relation("servicesAsBarber")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
 
 model Request {
-  id        Int      @id @default(autoincrement())
-  serviceId Int
+  id        String   @id @default(cuid())
+  serviceId String
   service   Service  @relation(fields: [serviceId], references: [id])
-  barberId  Int
+  barberId  String
   barber    User     @relation("barber", fields: [barberId], references: [id])
-  clientId  Int
+  clientId  String
   client    User     @relation("client", fields: [clientId], references: [id])
   price     Decimal
   date      DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Token {
+  id      String @id @default(cuid())
+  content String @unique
+  userId  String
+  user    User   @relation("tokens", fields: [userId], references: [id])
 }

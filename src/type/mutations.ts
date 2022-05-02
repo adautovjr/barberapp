@@ -5,7 +5,7 @@ export enum Role {
 }
 
 export interface UserMutationInput {
-  id?: string | null
+  id?: Number | null
   role: Role,
   name: string,
   email: string,
@@ -13,14 +13,16 @@ export interface UserMutationInput {
 }
 
 export interface ServiceMutationInput {
-  id?: string | null
+  id?: Number | null
   name: string,
   price: Number,
   duration: Number,
+  barbers: UserMutationInput[],
+  requests: RequestMutationInput[]
 }
 
 export interface RequestMutationInput {
-  id?: string | null
+  id?: Number | null
   serviceId: string,
   barberId: string,
   clientId: string,

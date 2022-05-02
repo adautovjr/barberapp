@@ -11,6 +11,7 @@ type User {
   phone: String
   requestsAsBarber: [Request]
   requestsAsClient: [Request]
+  services: [Service]
   createdAt: String
   updatedAt: String
 }
@@ -19,7 +20,8 @@ type Service {
   name: String!
   price: Float!
   duration: Int!
-  Requests: [Request]
+  requests: [Request]
+  barbers: [User]
   createdAt: String
   updatedAt: String
 }
@@ -36,11 +38,20 @@ type Request {
 type Query {
   allUsers: [User]
   allServices: [Service]
+  servicesByBarber(barberId: ID!): [Service]
   allRequests: [Request]
 }
 type Mutation {
   createUser(name: String!, email: String!, phone: String!, role: Role!): User
   createService(name: String!, price: Float!, duration: Int!): Service
+  updateService(
+    id: ID!
+    name: String
+    price: Float
+    duration: Int
+    barbers: [User!]
+    requests: [Request!]
+  ): Service
   createRequest(
     serviceId: String!
     barberId: String!
