@@ -11,3 +11,7 @@ services:
     # restart: always
     volumes:
       - ./data/postgres:/var/lib/postgresql/data:rw
+  backend:
+    image: adautovjr/barber-app:latest
+    ports:
+      - "8081:3000"
