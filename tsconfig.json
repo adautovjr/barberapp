@@ -24,7 +24,6 @@
       "@config/*": ["./src/config/*"],
       "@resolvers/*": ["./src/resolvers/*"],
       "@type/*": ["./src/type/*"],
-      "@generated": ["./src/prisma/generated/type-graphql"],
     }
   },
   "include": [

@@ -23,12 +23,16 @@ type AggregateService {
   _sum: ServiceSumAggregate
 }
 
+type AggregateToken {
+  _count: TokenCountAggregate
+  _max: TokenMaxAggregate
+  _min: TokenMinAggregate
+}
+
 type AggregateUser {
-  _avg: UserAvgAggregate
   _count: UserCountAggregate
   _max: UserMaxAggregate
   _min: UserMinAggregate
-  _sum: UserSumAggregate
 }
 
 """
@@ -164,24 +168,31 @@ input IntWithAggregatesFilter {
 type Mutation {
   createManyRequest(data: [RequestCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyService(data: [ServiceCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
+  createManyToken(data: [TokenCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyUser(data: [UserCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createRequest(data: RequestCreateInput!): Request!
   createService(data: ServiceCreateInput!): Service!
+  createToken(data: TokenCreateInput!): Token!
   createUser(data: UserCreateInput!): User!
   deleteManyRequest(where: RequestWhereInput): AffectedRowsOutput!
   deleteManyService(where: ServiceWhereInput): AffectedRowsOutput!
+  deleteManyToken(where: TokenWhereInput): AffectedRowsOutput!
   deleteManyUser(where: UserWhereInput): AffectedRowsOutput!
   deleteRequest(where: RequestWhereUniqueInput!): Request
   deleteService(where: ServiceWhereUniqueInput!): Service
+  deleteToken(where: TokenWhereUniqueInput!): Token
   deleteUser(where: UserWhereUniqueInput!): User
   updateManyRequest(data: RequestUpdateManyMutationInput!, where: RequestWhereInput): AffectedRowsOutput!
   updateManyService(data: ServiceUpdateManyMutationInput!, where: ServiceWhereInput): AffectedRowsOutput!
+  updateManyToken(data: TokenUpdateManyMutationInput!, where: TokenWhereInput): AffectedRowsOutput!
   updateManyUser(data: UserUpdateManyMutationInput!, where: UserWhereInput): AffectedRowsOutput!
   updateRequest(data: RequestUpdateInput!, where: RequestWhereUniqueInput!): Request
   updateService(data: ServiceUpdateInput!, where: ServiceWhereUniqueInput!): Service
+  updateToken(data: TokenUpdateInput!, where: TokenWhereUniqueInput!): Token
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   upsertRequest(create: RequestCreateInput!, update: RequestUpdateInput!, where: RequestWhereUniqueInput!): Request!
   upsertService(create: ServiceCreateInput!, update: ServiceUpdateInput!, where: ServiceWhereUniqueInput!): Service!
+  upsertToken(create: TokenCreateInput!, update: TokenUpdateInput!, where: TokenWhereUniqueInput!): Token!
   upsertUser(create: UserCreateInput!, update: UserUpdateInput!, where: UserWhereUniqueInput!): User!
 }
 
@@ -372,17 +383,22 @@ input NullableStringFieldUpdateOperationsInput {
 type Query {
   aggregateRequest(cursor: RequestWhereUniqueInput, orderBy: [RequestOrderByWithRelationInput!], skip: Int, take: Int, where: RequestWhereInput): AggregateRequest!
   aggregateService(cursor: ServiceWhereUniqueInput, orderBy: [ServiceOrderByWithRelationInput!], skip: Int, take: Int, where: ServiceWhereInput): AggregateService!
+  aggregateToken(cursor: TokenWhereUniqueInput, orderBy: [TokenOrderByWithRelationInput!], skip: Int, take: Int, where: TokenWhereInput): AggregateToken!
   aggregateUser(cursor: UserWhereUniqueInput, orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): AggregateUser!
   findFirstRequest(cursor: RequestWhereUniqueInput, distinct: [RequestScalarFieldEnum!], orderBy: [RequestOrderByWithRelationInput!], skip: Int, take: Int, where: RequestWhereInput): Request
   findFirstService(cursor: ServiceWhereUniqueInput, distinct: [ServiceScalarFieldEnum!], orderBy: [ServiceOrderByWithRelationInput!], skip: Int, take: Int, where: ServiceWhereInput): Service
+  findFirstToken(cursor: TokenWhereUniqueInput, distinct: [TokenScalarFieldEnum!], orderBy: [TokenOrderByWithRelationInput!], skip: Int, take: Int, where: TokenWhereInput): Token
   findFirstUser(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): User
   groupByRequest(by: [RequestScalarFieldEnum!]!, having: RequestScalarWhereWithAggregatesInput, orderBy: [RequestOrderByWithAggregationInput!], skip: Int, take: Int, where: RequestWhereInput): [RequestGroupBy!]!
   groupByService(by: [ServiceScalarFieldEnum!]!, having: ServiceScalarWhereWithAggregatesInput, orderBy: [ServiceOrderByWithAggregationInput!], skip: Int, take: Int, where: ServiceWhereInput): [ServiceGroupBy!]!
+  groupByToken(by: [TokenScalarFieldEnum!]!, having: TokenScalarWhereWithAggregatesInput, orderBy: [TokenOrderByWithAggregationInput!], skip: Int, take: Int, where: TokenWhereInput): [TokenGroupBy!]!
   groupByUser(by: [UserScalarFieldEnum!]!, having: UserScalarWhereWithAggregatesInput, orderBy: [UserOrderByWithAggregationInput!], skip: Int, take: Int, where: UserWhereInput): [UserGroupBy!]!
   request(where: RequestWhereUniqueInput!): Request
   requests(cursor: RequestWhereUniqueInput, distinct: [RequestScalarFieldEnum!], orderBy: [RequestOrderByWithRelationInput!], skip: Int, take: Int, where: RequestWhereInput): [Request!]!
   service(where: ServiceWhereUniqueInput!): Service
   services(cursor: ServiceWhereUniqueInput, distinct: [ServiceScalarFieldEnum!], orderBy: [ServiceOrderByWithRelationInput!], skip: Int, take: Int, where: ServiceWhereInput): [Service!]!
+  token(where: TokenWhereUniqueInput!): Token
+  tokens(cursor: TokenWhereUniqueInput, distinct: [TokenScalarFieldEnum!], orderBy: [TokenOrderByWithRelationInput!], skip: Int, take: Int, where: TokenWhereInput): [Token!]!
   user(where: UserWhereUniqueInput!): User
   users(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
 }
@@ -394,32 +410,24 @@ enum QueryMode {
 
 type Request {
   barber: User!
-  barberId: Int!
+  barberId: String!
   client: User!
-  clientId: Int!
+  clientId: String!
   createdAt: DateTime!
   date: DateTime!
-  id: Int!
+  id: String!
   price: Decimal!
   service: Service!
-  serviceId: Int!
+  serviceId: String!
   updatedAt: DateTime!
 }
 
 type RequestAvgAggregate {
-  barberId: Float
-  clientId: Float
-  id: Float
   price: Decimal
-  serviceId: Float
 }
 
 input RequestAvgOrderByAggregateInput {
-  barberId: SortOrder
-  clientId: SortOrder
-  id: SortOrder
   price: SortOrder
-  serviceId: SortOrder
 }
 
 type RequestCountAggregate {
@@ -450,18 +458,19 @@ input RequestCreateInput {
   client: UserCreateNestedOneWithoutRequestsAsClientInput!
   createdAt: DateTime
   date: DateTime!
+  id: String
   price: Decimal!
   service: ServiceCreateNestedOneWithoutRequestsInput!
   updatedAt: DateTime
 }
 
 input RequestCreateManyBarberInput {
-  clientId: Int!
+  clientId: String!
   createdAt: DateTime
   date: DateTime!
-  id: Int
+  id: String
   price: Decimal!
-  serviceId: Int!
+  serviceId: String!
   updatedAt: DateTime
 }
 
@@ -471,12 +480,12 @@ input RequestCreateManyBarberInputEnvelope {
 }
 
 input RequestCreateManyClientInput {
-  barberId: Int!
+  barberId: String!
   createdAt: DateTime
   date: DateTime!
-  id: Int
+  id: String
   price: Decimal!
-  serviceId: Int!
+  serviceId: String!
   updatedAt: DateTime
 }
 
@@ -486,22 +495,22 @@ input RequestCreateManyClientInputEnvelope {
 }
 
 input RequestCreateManyInput {
-  barberId: Int!
-  clientId: Int!
+  barberId: String!
+  clientId: String!
   createdAt: DateTime
   date: DateTime!
-  id: Int
+  id: String
   price: Decimal!
-  serviceId: Int!
+  serviceId: String!
   updatedAt: DateTime
 }
 
 input RequestCreateManyServiceInput {
-  barberId: Int!
-  clientId: Int!
+  barberId: String!
+  clientId: String!
   createdAt: DateTime
   date: DateTime!
-  id: Int
+  id: String
   price: Decimal!
   updatedAt: DateTime
 }
@@ -551,6 +560,7 @@ input RequestCreateWithoutBarberInput {
   client: UserCreateNestedOneWithoutRequestsAsClientInput!
   createdAt: DateTime
   date: DateTime!
+  id: String
   price: Decimal!
   service: ServiceCreateNestedOneWithoutRequestsInput!
   updatedAt: DateTime
@@ -560,6 +570,7 @@ input RequestCreateWithoutClientInput {
   barber: UserCreateNestedOneWithoutRequestsAsBarberInput!
   createdAt: DateTime
   date: DateTime!
+  id: String
   price: Decimal!
   service: ServiceCreateNestedOneWithoutRequestsInput!
   updatedAt: DateTime
@@ -570,6 +581,7 @@ input RequestCreateWithoutServiceInput {
   client: UserCreateNestedOneWithoutRequestsAsClientInput!
   createdAt: DateTime
   date: DateTime!
+  id: String
   price: Decimal!
   updatedAt: DateTime
 }
@@ -580,13 +592,13 @@ type RequestGroupBy {
   _max: RequestMaxAggregate
   _min: RequestMinAggregate
   _sum: RequestSumAggregate
-  barberId: Int!
-  clientId: Int!
+  barberId: String!
+  clientId: String!
   createdAt: DateTime!
   date: DateTime!
-  id: Int!
+  id: String!
   price: Decimal!
-  serviceId: Int!
+  serviceId: String!
   updatedAt: DateTime!
 }
 
@@ -597,13 +609,13 @@ input RequestListRelationFilter {
 }
 
 type RequestMaxAggregate {
-  barberId: Int
-  clientId: Int
+  barberId: String
+  clientId: String
   createdAt: DateTime
   date: DateTime
-  id: Int
+  id: String
   price: Decimal
-  serviceId: Int
+  serviceId: String
   updatedAt: DateTime
 }
 
@@ -619,13 +631,13 @@ input RequestMaxOrderByAggregateInput {
 }
 
 type RequestMinAggregate {
-  barberId: Int
-  clientId: Int
+  barberId: String
+  clientId: String
   createdAt: DateTime
   date: DateTime
-  id: Int
+  id: String
   price: Decimal
-  serviceId: Int
+  serviceId: String
   updatedAt: DateTime
 }
 
@@ -689,13 +701,13 @@ input RequestScalarWhereInput {
   AND: [RequestScalarWhereInput!]
   NOT: [RequestScalarWhereInput!]
   OR: [RequestScalarWhereInput!]
-  barberId: IntFilter
-  clientId: IntFilter
+  barberId: StringFilter
+  clientId: StringFilter
   createdAt: DateTimeFilter
   date: DateTimeFilter
-  id: IntFilter
+  id: StringFilter
   price: DecimalFilter
-  serviceId: IntFilter
+  serviceId: StringFilter
   updatedAt: DateTimeFilter
 }
 
@@ -703,30 +715,22 @@ input RequestScalarWhereWithAggregatesInput {
   AND: [RequestScalarWhereWithAggregatesInput!]
   NOT: [RequestScalarWhereWithAggregatesInput!]
   OR: [RequestScalarWhereWithAggregatesInput!]
-  barberId: IntWithAggregatesFilter
-  clientId: IntWithAggregatesFilter
+  barberId: StringWithAggregatesFilter
+  clientId: StringWithAggregatesFilter
   createdAt: DateTimeWithAggregatesFilter
   date: DateTimeWithAggregatesFilter
-  id: IntWithAggregatesFilter
+  id: StringWithAggregatesFilter
   price: DecimalWithAggregatesFilter
-  serviceId: IntWithAggregatesFilter
+  serviceId: StringWithAggregatesFilter
   updatedAt: DateTimeWithAggregatesFilter
 }
 
 type RequestSumAggregate {
-  barberId: Int
-  clientId: Int
-  id: Int
   price: Decimal
-  serviceId: Int
 }
 
 input RequestSumOrderByAggregateInput {
-  barberId: SortOrder
-  clientId: SortOrder
-  id: SortOrder
   price: SortOrder
-  serviceId: SortOrder
 }
 
 input RequestUpdateInput {
@@ -734,6 +738,7 @@ input RequestUpdateInput {
   client: UserUpdateOneRequiredWithoutRequestsAsClientInput
   createdAt: DateTimeFieldUpdateOperationsInput
   date: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   price: DecimalFieldUpdateOperationsInput
   service: ServiceUpdateOneRequiredWithoutRequestsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -742,6 +747,7 @@ input RequestUpdateInput {
 input RequestUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   date: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   price: DecimalFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
@@ -822,6 +828,7 @@ input RequestUpdateWithoutBarberInput {
   client: UserUpdateOneRequiredWithoutRequestsAsClientInput
   createdAt: DateTimeFieldUpdateOperationsInput
   date: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   price: DecimalFieldUpdateOperationsInput
   service: ServiceUpdateOneRequiredWithoutRequestsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -831,6 +838,7 @@ input RequestUpdateWithoutClientInput {
   barber: UserUpdateOneRequiredWithoutRequestsAsBarberInput
   createdAt: DateTimeFieldUpdateOperationsInput
   date: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   price: DecimalFieldUpdateOperationsInput
   service: ServiceUpdateOneRequiredWithoutRequestsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -841,6 +849,7 @@ input RequestUpdateWithoutServiceInput {
   client: UserUpdateOneRequiredWithoutRequestsAsClientInput
   createdAt: DateTimeFieldUpdateOperationsInput
   date: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   price: DecimalFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
@@ -868,20 +877,20 @@ input RequestWhereInput {
   NOT: [RequestWhereInput!]
   OR: [RequestWhereInput!]
   barber: UserRelationFilter
-  barberId: IntFilter
+  barberId: StringFilter
   client: UserRelationFilter
-  clientId: IntFilter
+  clientId: StringFilter
   createdAt: DateTimeFilter
   date: DateTimeFilter
-  id: IntFilter
+  id: StringFilter
   price: DecimalFilter
   service: ServiceRelationFilter
-  serviceId: IntFilter
+  serviceId: StringFilter
   updatedAt: DateTimeFilter
 }
 
 input RequestWhereUniqueInput {
-  id: Int
+  id: String
 }
 
 enum Role {
@@ -895,7 +904,7 @@ type Service {
   barbers(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
   createdAt: DateTime!
   duration: Int!
-  id: Int!
+  id: String!
   name: String!
   price: Decimal!
   requests(cursor: RequestWhereUniqueInput, distinct: [RequestScalarFieldEnum!], orderBy: [RequestOrderByWithRelationInput!], skip: Int, take: Int, where: RequestWhereInput): [Request!]!
@@ -904,13 +913,11 @@ type Service {
 
 type ServiceAvgAggregate {
   duration: Float
-  id: Float
   price: Decimal
 }
 
 input ServiceAvgOrderByAggregateInput {
   duration: SortOrder
-  id: SortOrder
   price: SortOrder
 }
 
@@ -942,6 +949,7 @@ input ServiceCreateInput {
   barbers: UserCreateNestedManyWithoutServicesInput
   createdAt: DateTime
   duration: Int!
+  id: String
   name: String!
   price: Decimal!
   requests: RequestCreateNestedManyWithoutServiceInput
@@ -951,7 +959,7 @@ input ServiceCreateInput {
 input ServiceCreateManyInput {
   createdAt: DateTime
   duration: Int!
-  id: Int
+  id: String
   name: String!
   price: Decimal!
   updatedAt: DateTime
@@ -982,6 +990,7 @@ input ServiceCreateOrConnectWithoutRequestsInput {
 input ServiceCreateWithoutBarbersInput {
   createdAt: DateTime
   duration: Int!
+  id: String
   name: String!
   price: Decimal!
   requests: RequestCreateNestedManyWithoutServiceInput
@@ -992,6 +1001,7 @@ input ServiceCreateWithoutRequestsInput {
   barbers: UserCreateNestedManyWithoutServicesInput
   createdAt: DateTime
   duration: Int!
+  id: String
   name: String!
   price: Decimal!
   updatedAt: DateTime
@@ -1005,7 +1015,7 @@ type ServiceGroupBy {
   _sum: ServiceSumAggregate
   createdAt: DateTime!
   duration: Int!
-  id: Int!
+  id: String!
   name: String!
   price: Decimal!
   updatedAt: DateTime!
@@ -1020,7 +1030,7 @@ input ServiceListRelationFilter {
 type ServiceMaxAggregate {
   createdAt: DateTime
   duration: Int
-  id: Int
+  id: String
   name: String
   price: Decimal
   updatedAt: DateTime
@@ -1038,7 +1048,7 @@ input ServiceMaxOrderByAggregateInput {
 type ServiceMinAggregate {
   createdAt: DateTime
   duration: Int
-  id: Int
+  id: String
   name: String
   price: Decimal
   updatedAt: DateTime
@@ -1102,7 +1112,7 @@ input ServiceScalarWhereInput {
   OR: [ServiceScalarWhereInput!]
   createdAt: DateTimeFilter
   duration: IntFilter
-  id: IntFilter
+  id: StringFilter
   name: StringFilter
   price: DecimalFilter
   updatedAt: DateTimeFilter
@@ -1114,7 +1124,7 @@ input ServiceScalarWhereWithAggregatesInput {
   OR: [ServiceScalarWhereWithAggregatesInput!]
   createdAt: DateTimeWithAggregatesFilter
   duration: IntWithAggregatesFilter
-  id: IntWithAggregatesFilter
+  id: StringWithAggregatesFilter
   name: StringWithAggregatesFilter
   price: DecimalWithAggregatesFilter
   updatedAt: DateTimeWithAggregatesFilter
@@ -1122,13 +1132,11 @@ input ServiceScalarWhereWithAggregatesInput {
 
 type ServiceSumAggregate {
   duration: Int
-  id: Int
   price: Decimal
 }
 
 input ServiceSumOrderByAggregateInput {
   duration: SortOrder
-  id: SortOrder
   price: SortOrder
 }
 
@@ -1136,6 +1144,7 @@ input ServiceUpdateInput {
   barbers: UserUpdateManyWithoutServicesInput
   createdAt: DateTimeFieldUpdateOperationsInput
   duration: IntFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   price: DecimalFieldUpdateOperationsInput
   requests: RequestUpdateManyWithoutServiceInput
@@ -1145,6 +1154,7 @@ input ServiceUpdateInput {
 input ServiceUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   duration: IntFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   price: DecimalFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -1184,6 +1194,7 @@ input ServiceUpdateWithWhereUniqueWithoutBarbersInput {
 input ServiceUpdateWithoutBarbersInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   duration: IntFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   price: DecimalFieldUpdateOperationsInput
   requests: RequestUpdateManyWithoutServiceInput
@@ -1194,6 +1205,7 @@ input ServiceUpdateWithoutRequestsInput {
   barbers: UserUpdateManyWithoutServicesInput
   createdAt: DateTimeFieldUpdateOperationsInput
   duration: IntFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   price: DecimalFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -1217,7 +1229,7 @@ input ServiceWhereInput {
   barbers: UserListRelationFilter
   createdAt: DateTimeFilter
   duration: IntFilter
-  id: IntFilter
+  id: StringFilter
   name: StringFilter
   price: DecimalFilter
   requests: RequestListRelationFilter
@@ -1225,7 +1237,7 @@ input ServiceWhereInput {
 }
 
 input ServiceWhereUniqueInput {
-  id: Int
+  id: String
 }
 
 enum SortOrder {
@@ -1303,32 +1315,229 @@ input StringWithAggregatesFilter {
   startsWith: String
 }
 
+type Token {
+  content: String!
+  id: String!
+  user: User!
+  userId: String!
+}
+
+type TokenCountAggregate {
+  _all: Int!
+  content: Int!
+  id: Int!
+  userId: Int!
+}
+
+input TokenCountOrderByAggregateInput {
+  content: SortOrder
+  id: SortOrder
+  userId: SortOrder
+}
+
+input TokenCreateInput {
+  content: String!
+  id: String
+  user: UserCreateNestedOneWithoutTokensInput!
+}
+
+input TokenCreateManyInput {
+  content: String!
+  id: String
+  userId: String!
+}
+
+input TokenCreateManyUserInput {
+  content: String!
+  id: String
+}
+
+input TokenCreateManyUserInputEnvelope {
+  data: [TokenCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input TokenCreateNestedManyWithoutUserInput {
+  connect: [TokenWhereUniqueInput!]
+  connectOrCreate: [TokenCreateOrConnectWithoutUserInput!]
+  create: [TokenCreateWithoutUserInput!]
+  createMany: TokenCreateManyUserInputEnvelope
+}
+
+input TokenCreateOrConnectWithoutUserInput {
+  create: TokenCreateWithoutUserInput!
+  where: TokenWhereUniqueInput!
+}
+
+input TokenCreateWithoutUserInput {
+  content: String!
+  id: String
+}
+
+type TokenGroupBy {
+  _count: TokenCountAggregate
+  _max: TokenMaxAggregate
+  _min: TokenMinAggregate
+  content: String!
+  id: String!
+  userId: String!
+}
+
+input TokenListRelationFilter {
+  every: TokenWhereInput
+  none: TokenWhereInput
+  some: TokenWhereInput
+}
+
+type TokenMaxAggregate {
+  content: String
+  id: String
+  userId: String
+}
+
+input TokenMaxOrderByAggregateInput {
+  content: SortOrder
+  id: SortOrder
+  userId: SortOrder
+}
+
+type TokenMinAggregate {
+  content: String
+  id: String
+  userId: String
+}
+
+input TokenMinOrderByAggregateInput {
+  content: SortOrder
+  id: SortOrder
+  userId: SortOrder
+}
+
+input TokenOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input TokenOrderByWithAggregationInput {
+  _count: TokenCountOrderByAggregateInput
+  _max: TokenMaxOrderByAggregateInput
+  _min: TokenMinOrderByAggregateInput
+  content: SortOrder
+  id: SortOrder
+  userId: SortOrder
+}
+
+input TokenOrderByWithRelationInput {
+  content: SortOrder
+  id: SortOrder
+  user: UserOrderByWithRelationInput
+  userId: SortOrder
+}
+
+enum TokenScalarFieldEnum {
+  content
+  id
+  userId
+}
+
+input TokenScalarWhereInput {
+  AND: [TokenScalarWhereInput!]
+  NOT: [TokenScalarWhereInput!]
+  OR: [TokenScalarWhereInput!]
+  content: StringFilter
+  id: StringFilter
+  userId: StringFilter
+}
+
+input TokenScalarWhereWithAggregatesInput {
+  AND: [TokenScalarWhereWithAggregatesInput!]
+  NOT: [TokenScalarWhereWithAggregatesInput!]
+  OR: [TokenScalarWhereWithAggregatesInput!]
+  content: StringWithAggregatesFilter
+  id: StringWithAggregatesFilter
+  userId: StringWithAggregatesFilter
+}
+
+input TokenUpdateInput {
+  content: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  user: UserUpdateOneRequiredWithoutTokensInput
+}
+
+input TokenUpdateManyMutationInput {
+  content: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+}
+
+input TokenUpdateManyWithWhereWithoutUserInput {
+  data: TokenUpdateManyMutationInput!
+  where: TokenScalarWhereInput!
+}
+
+input TokenUpdateManyWithoutUserInput {
+  connect: [TokenWhereUniqueInput!]
+  connectOrCreate: [TokenCreateOrConnectWithoutUserInput!]
+  create: [TokenCreateWithoutUserInput!]
+  createMany: TokenCreateManyUserInputEnvelope
+  delete: [TokenWhereUniqueInput!]
+  deleteMany: [TokenScalarWhereInput!]
+  disconnect: [TokenWhereUniqueInput!]
+  set: [TokenWhereUniqueInput!]
+  update: [TokenUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [TokenUpdateManyWithWhereWithoutUserInput!]
+  upsert: [TokenUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input TokenUpdateWithWhereUniqueWithoutUserInput {
+  data: TokenUpdateWithoutUserInput!
+  where: TokenWhereUniqueInput!
+}
+
+input TokenUpdateWithoutUserInput {
+  content: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+}
+
+input TokenUpsertWithWhereUniqueWithoutUserInput {
+  create: TokenCreateWithoutUserInput!
+  update: TokenUpdateWithoutUserInput!
+  where: TokenWhereUniqueInput!
+}
+
+input TokenWhereInput {
+  AND: [TokenWhereInput!]
+  NOT: [TokenWhereInput!]
+  OR: [TokenWhereInput!]
+  content: StringFilter
+  id: StringFilter
+  user: UserRelationFilter
+  userId: StringFilter
+}
+
+input TokenWhereUniqueInput {
+  content: String
+  id: String
+}
+
 type User {
   _count: UserCount
   createdAt: DateTime!
   email: String
-  id: Int!
+  id: String!
   name: String!
   phone: String
   requestsAsBarber(cursor: RequestWhereUniqueInput, distinct: [RequestScalarFieldEnum!], orderBy: [RequestOrderByWithRelationInput!], skip: Int, take: Int, where: RequestWhereInput): [Request!]!
   requestsAsClient(cursor: RequestWhereUniqueInput, distinct: [RequestScalarFieldEnum!], orderBy: [RequestOrderByWithRelationInput!], skip: Int, take: Int, where: RequestWhereInput): [Request!]!
   role: Role!
   services(cursor: ServiceWhereUniqueInput, distinct: [ServiceScalarFieldEnum!], orderBy: [ServiceOrderByWithRelationInput!], skip: Int, take: Int, where: ServiceWhereInput): [Service!]!
+  tokens(cursor: TokenWhereUniqueInput, distinct: [TokenScalarFieldEnum!], orderBy: [TokenOrderByWithRelationInput!], skip: Int, take: Int, where: TokenWhereInput): [Token!]!
   updatedAt: DateTime!
-}
-
-type UserAvgAggregate {
-  id: Float
-}
-
-input UserAvgOrderByAggregateInput {
-  id: SortOrder
 }
 
 type UserCount {
   requestsAsBarber: Int!
   requestsAsClient: Int!
   services: Int!
+  tokens: Int!
 }
 
 type UserCountAggregate {
@@ -1355,19 +1564,21 @@ input UserCountOrderByAggregateInput {
 input UserCreateInput {
   createdAt: DateTime
   email: String
+  id: String
   name: String!
   phone: String
   requestsAsBarber: RequestCreateNestedManyWithoutBarberInput
   requestsAsClient: RequestCreateNestedManyWithoutClientInput
   role: Role!
   services: ServiceCreateNestedManyWithoutBarbersInput
+  tokens: TokenCreateNestedManyWithoutUserInput
   updatedAt: DateTime
 }
 
 input UserCreateManyInput {
   createdAt: DateTime
   email: String
-  id: Int
+  id: String
   name: String!
   phone: String
   role: Role!
@@ -1392,6 +1603,12 @@ input UserCreateNestedOneWithoutRequestsAsClientInput {
   create: UserCreateWithoutRequestsAsClientInput
 }
 
+input UserCreateNestedOneWithoutTokensInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutTokensInput
+  create: UserCreateWithoutTokensInput
+}
+
 input UserCreateOrConnectWithoutRequestsAsBarberInput {
   create: UserCreateWithoutRequestsAsBarberInput!
   where: UserWhereUniqueInput!
@@ -1407,48 +1624,70 @@ input UserCreateOrConnectWithoutServicesInput {
   where: UserWhereUniqueInput!
 }
 
+input UserCreateOrConnectWithoutTokensInput {
+  create: UserCreateWithoutTokensInput!
+  where: UserWhereUniqueInput!
+}
+
 input UserCreateWithoutRequestsAsBarberInput {
   createdAt: DateTime
   email: String
+  id: String
   name: String!
   phone: String
   requestsAsClient: RequestCreateNestedManyWithoutClientInput
   role: Role!
   services: ServiceCreateNestedManyWithoutBarbersInput
+  tokens: TokenCreateNestedManyWithoutUserInput
   updatedAt: DateTime
 }
 
 input UserCreateWithoutRequestsAsClientInput {
   createdAt: DateTime
   email: String
+  id: String
   name: String!
   phone: String
   requestsAsBarber: RequestCreateNestedManyWithoutBarberInput
   role: Role!
   services: ServiceCreateNestedManyWithoutBarbersInput
+  tokens: TokenCreateNestedManyWithoutUserInput
   updatedAt: DateTime
 }
 
 input UserCreateWithoutServicesInput {
   createdAt: DateTime
   email: String
+  id: String
   name: String!
   phone: String
   requestsAsBarber: RequestCreateNestedManyWithoutBarberInput
   requestsAsClient: RequestCreateNestedManyWithoutClientInput
   role: Role!
+  tokens: TokenCreateNestedManyWithoutUserInput
+  updatedAt: DateTime
+}
+
+input UserCreateWithoutTokensInput {
+  createdAt: DateTime
+  email: String
+  id: String
+  name: String!
+  phone: String
+  requestsAsBarber: RequestCreateNestedManyWithoutBarberInput
+  requestsAsClient: RequestCreateNestedManyWithoutClientInput
+  role: Role!
+  services: ServiceCreateNestedManyWithoutBarbersInput
   updatedAt: DateTime
 }
 
 type UserGroupBy {
-  _avg: UserAvgAggregate
   _count: UserCountAggregate
   _max: UserMaxAggregate
   _min: UserMinAggregate
-  _sum: UserSumAggregate
   createdAt: DateTime!
   email: String
-  id: Int!
+  id: String!
   name: String!
   phone: String
   role: Role!
@@ -1464,7 +1703,7 @@ input UserListRelationFilter {
 type UserMaxAggregate {
   createdAt: DateTime
   email: String
-  id: Int
+  id: String
   name: String
   phone: String
   role: Role
@@ -1484,7 +1723,7 @@ input UserMaxOrderByAggregateInput {
 type UserMinAggregate {
   createdAt: DateTime
   email: String
-  id: Int
+  id: String
   name: String
   phone: String
   role: Role
@@ -1506,11 +1745,9 @@ input UserOrderByRelationAggregateInput {
 }
 
 input UserOrderByWithAggregationInput {
-  _avg: UserAvgOrderByAggregateInput
   _count: UserCountOrderByAggregateInput
   _max: UserMaxOrderByAggregateInput
   _min: UserMinOrderByAggregateInput
-  _sum: UserSumOrderByAggregateInput
   createdAt: SortOrder
   email: SortOrder
   id: SortOrder
@@ -1530,6 +1767,7 @@ input UserOrderByWithRelationInput {
   requestsAsClient: RequestOrderByRelationAggregateInput
   role: SortOrder
   services: ServiceOrderByRelationAggregateInput
+  tokens: TokenOrderByRelationAggregateInput
   updatedAt: SortOrder
 }
 
@@ -1554,7 +1792,7 @@ input UserScalarWhereInput {
   OR: [UserScalarWhereInput!]
   createdAt: DateTimeFilter
   email: StringNullableFilter
-  id: IntFilter
+  id: StringFilter
   name: StringFilter
   phone: StringNullableFilter
   role: EnumRoleFilter
@@ -1567,36 +1805,31 @@ input UserScalarWhereWithAggregatesInput {
   OR: [UserScalarWhereWithAggregatesInput!]
   createdAt: DateTimeWithAggregatesFilter
   email: StringNullableWithAggregatesFilter
-  id: IntWithAggregatesFilter
+  id: StringWithAggregatesFilter
   name: StringWithAggregatesFilter
   phone: StringNullableWithAggregatesFilter
   role: EnumRoleWithAggregatesFilter
   updatedAt: DateTimeWithAggregatesFilter
 }
 
-type UserSumAggregate {
-  id: Int
-}
-
-input UserSumOrderByAggregateInput {
-  id: SortOrder
-}
-
 input UserUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   phone: NullableStringFieldUpdateOperationsInput
   requestsAsBarber: RequestUpdateManyWithoutBarberInput
   requestsAsClient: RequestUpdateManyWithoutClientInput
   role: EnumRoleFieldUpdateOperationsInput
   services: ServiceUpdateManyWithoutBarbersInput
+  tokens: TokenUpdateManyWithoutUserInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
 
 input UserUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   phone: NullableStringFieldUpdateOperationsInput
   role: EnumRoleFieldUpdateOperationsInput
@@ -1637,6 +1870,14 @@ input UserUpdateOneRequiredWithoutRequestsAsClientInput {
   upsert: UserUpsertWithoutRequestsAsClientInput
 }
 
+input UserUpdateOneRequiredWithoutTokensInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutTokensInput
+  create: UserCreateWithoutTokensInput
+  update: UserUpdateWithoutTokensInput
+  upsert: UserUpsertWithoutTokensInput
+}
+
 input UserUpdateWithWhereUniqueWithoutServicesInput {
   data: UserUpdateWithoutServicesInput!
   where: UserWhereUniqueInput!
@@ -1645,33 +1886,52 @@ input UserUpdateWithWhereUniqueWithoutServicesInput {
 input UserUpdateWithoutRequestsAsBarberInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   phone: NullableStringFieldUpdateOperationsInput
   requestsAsClient: RequestUpdateManyWithoutClientInput
   role: EnumRoleFieldUpdateOperationsInput
   services: ServiceUpdateManyWithoutBarbersInput
+  tokens: TokenUpdateManyWithoutUserInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
 
 input UserUpdateWithoutRequestsAsClientInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   phone: NullableStringFieldUpdateOperationsInput
   requestsAsBarber: RequestUpdateManyWithoutBarberInput
   role: EnumRoleFieldUpdateOperationsInput
   services: ServiceUpdateManyWithoutBarbersInput
+  tokens: TokenUpdateManyWithoutUserInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
 
 input UserUpdateWithoutServicesInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   phone: NullableStringFieldUpdateOperationsInput
   requestsAsBarber: RequestUpdateManyWithoutBarberInput
   requestsAsClient: RequestUpdateManyWithoutClientInput
   role: EnumRoleFieldUpdateOperationsInput
+  tokens: TokenUpdateManyWithoutUserInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input UserUpdateWithoutTokensInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  email: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  phone: NullableStringFieldUpdateOperationsInput
+  requestsAsBarber: RequestUpdateManyWithoutBarberInput
+  requestsAsClient: RequestUpdateManyWithoutClientInput
+  role: EnumRoleFieldUpdateOperationsInput
+  services: ServiceUpdateManyWithoutBarbersInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
 
@@ -1691,23 +1951,29 @@ input UserUpsertWithoutRequestsAsClientInput {
   update: UserUpdateWithoutRequestsAsClientInput!
 }
 
+input UserUpsertWithoutTokensInput {
+  create: UserCreateWithoutTokensInput!
+  update: UserUpdateWithoutTokensInput!
+}
+
 input UserWhereInput {
   AND: [UserWhereInput!]
   NOT: [UserWhereInput!]
   OR: [UserWhereInput!]
   createdAt: DateTimeFilter
   email: StringNullableFilter
-  id: IntFilter
+  id: StringFilter
   name: StringFilter
   phone: StringNullableFilter
   requestsAsBarber: RequestListRelationFilter
   requestsAsClient: RequestListRelationFilter
   role: EnumRoleFilter
   services: ServiceListRelationFilter
+  tokens: TokenListRelationFilter
   updatedAt: DateTimeFilter
 }
 
 input UserWhereUniqueInput {
   email: String
-  id: Int
+  id: String
 }

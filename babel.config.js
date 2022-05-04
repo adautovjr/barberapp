@@ -8,9 +8,14 @@ module.exports = {
         },
       },
     ],
-    "@babel/preset-typescript",
+    ["@babel/preset-typescript", { onlyRemoveTypeImports: true }],
   ],
   plugins: [
+    ["@babel/plugin-proposal-decorators", { version: "legacy" }],
+    ["@babel/plugin-proposal-class-properties", { loose: true }],
+    ["babel-plugin-parameter-decorator"],
+    ["@babel/plugin-transform-flow-strip-types"],
+    ["@babel/plugin-proposal-class-static-block"],
     [
       "module-resolver",
       {
@@ -20,6 +25,7 @@ module.exports = {
           "@shared": "./src/shared",
           "@infra": "./src/infra",
           "@config": "./src/config",
+          "@generated": "./src/prisma/generated/type-graphql",
         },
       },
     ],

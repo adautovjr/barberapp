@@ -2,7 +2,7 @@ import express from 'express'
 import { graphqlHTTP } from 'express-graphql'
 import 'reflect-metadata'
 import { PrismaClient } from '@prisma/client'
-import { resolvers } from '@generated'
+import { resolvers } from './prisma/generated/type-graphql/index'
 import path from "path";
 import cors from 'cors'
 import { buildSchema } from 'type-graphql'
@@ -27,8 +27,9 @@ async function main () {
       prisma,
     }
   }));
-  
-  app.listen(3000)
+  const port = process.env.PORT || 3000
+  console.log("🚀 ~ Running on port: ", port)
+  app.listen(port)
 }
 
 main().catch(console.error)
