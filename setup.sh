@@ -7,6 +7,7 @@ git checkout stag/backend
 npm install
 sudo docker-compose up -d
 npx prisma migrate dev
+npx prisma generate
 cd ../barber_flutter/
 git checkout stag/mobile
 flutter pub get

@@ -144,3 +144,13 @@ dist
 .svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/node
+# Flutter & Node remaining ignores
+.packages
+.flutter-cache
+.flutter-plugins
+.flutter-plugins-dependencies
+.dart_tool/
+android/
+ios/
+lib/
+windows/
