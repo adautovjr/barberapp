@@ -68,9 +68,11 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
             createServiceMutation,
           ),
           variables: {
-            'name': name,
-            'price': price,
-            'duration': duration,
+            'data': {
+              'name': name,
+              'price': price.toString(),
+              'duration': duration,
+            }
           },
         ),
       );

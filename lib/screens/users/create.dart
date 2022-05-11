@@ -71,10 +71,12 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
             createUserMutation,
           ),
           variables: {
-            'role': role,
-            'name': name,
-            'email': email,
-            'phone': phone,
+            'data': {
+              'role': role,
+              'name': name,
+              'email': email,
+              'phone': phone,
+            }
           },
         ),
       );

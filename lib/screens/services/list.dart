@@ -45,7 +45,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
             return const Text('Loading');
           }
 
-          List? services = result.data?['allServices'];
+          List? services = result.data?['services'];
 
           if (services == null || services.isEmpty) {
             return const Text('No services');

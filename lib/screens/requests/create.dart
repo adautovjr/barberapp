@@ -1,6 +1,5 @@
 import 'package:barber_flutter/config/graphql_config.dart';
 import 'package:barber_flutter/graphql/mutation.dart';
-import 'package:barber_flutter/models/service.dart';
 import 'package:barber_flutter/widgets/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -68,9 +67,11 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
             createServiceMutation,
           ),
           variables: {
-            'name': name,
-            'price': price,
-            'duration': duration,
+            'data': {
+              'name': name,
+              'price': price.toString(),
+              'duration': duration,
+            }
           },
         ),
       );

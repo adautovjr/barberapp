@@ -1,6 +1,6 @@
 String getServicesQuery = """
   query {
-    allServices {
+    services {
       id
       name
       price
@@ -11,7 +11,7 @@ String getServicesQuery = """
 
 String getUsersQuery = """
   query {
-    allUsers {
+    users {
       id
       name
     }
@@ -20,7 +20,7 @@ String getUsersQuery = """
 
 String getRequestsQuery = """
   query {
-    allRequests {
+    requests {
       id
       service {
         name

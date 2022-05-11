@@ -45,7 +45,7 @@ class _UsersScreenState extends State<UsersScreen> {
             return const Text('Loading');
           }
 
-          List? users = result.data?['allUsers'];
+          List? users = result.data?['users'];
 
           if (users == null || users.isEmpty) {
             return const Text('No users');

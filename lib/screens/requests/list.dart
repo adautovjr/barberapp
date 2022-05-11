@@ -43,7 +43,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
             return const Text('Loading');
           }
 
-          List? requests = result.data?['allRequests'];
+          List? requests = result.data?['requests'];
 
           if (requests == null || requests.isEmpty) {
             return const Text('No requests');

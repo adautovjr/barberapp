@@ -1,13 +1,9 @@
 String createServiceMutation = """
   mutation createService (
-    \$name: String!
-    \$price: Float!
-    \$duration: Int!
+    \$data: ServiceCreateInput!
   ) {
     createService(
-      name: \$name
-      price: \$price
-      duration: \$duration
+      data: \$data
     ) {
       id
       name
@@ -19,17 +15,9 @@ String createServiceMutation = """
 """;
 
 String createUserMutation = """
-  mutation createUser (
-    \$name: String!
-    \$email: String!
-    \$phone: String!
-    \$role: Role!
-  ) {
+  mutation createUser (\$data: UserCreateInput!) {
     createUser(
-      name: \$name
-      email: \$email
-      phone: \$phone
-      role: \$role
+      data: \$data
     ) {
       id
       role
@@ -42,18 +30,10 @@ String createUserMutation = """
 
 String createRequestMutation = """
   mutation createRequest (
-    \$serviceId: String!
-    \$barberId: String!
-    \$clientId: String!
-    \$price: Float!
-    \$date: String!
+    \$data: RequestCreateInput!
   ) {
     createRequest(
-      \$serviceId: String!
-      \$barberId: String!
-      \$clientId: String!
-      \$price: Float!
-      \$date: String!
+      data: \$data
     ) {
       id
       service {
