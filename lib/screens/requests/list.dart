@@ -18,10 +18,12 @@ class _RequestsScreenState extends State<RequestsScreen> {
         title: const Text('Requests'),
       ),
       drawer: const Menu(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.of(context).pushNamed('/requests/create');
+      //   },
+      //   child: const Icon(Icons.add),
+      // ),
       body: Query(
         options: QueryOptions(
           document: gql(
@@ -53,18 +55,58 @@ class _RequestsScreenState extends State<RequestsScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: requests.length,
-                      itemBuilder: (context, index) {
-                        final request = requests[index];
+              SizedBox(
+                child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: requests.length,
+                    itemBuilder: (context, index) {
+                      final request = requests[index];
 
-                        return Text(request['serviceId'] ?? '');
-                      }),
-                ),
+                      return GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(25, 5, 25, 0),
+                          width: 1,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            elevation: 3,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Text(
+                                          request['name'] ?? '',
+                                          style: const TextStyle(fontSize: 20),
+                                        ),
+                                      ),
+                                      flex: 2,
+                                    ),
+                                    Expanded(
+                                      child: IconButton(
+                                        icon: const Icon(Icons.open_in_new),
+                                        color: Colors.black26,
+                                        onPressed: () {},
+                                      ),
+                                      flex: 1,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+
+                      // return Text(request['serviceId'] ?? '');
+                    }),
               )
             ],
           );

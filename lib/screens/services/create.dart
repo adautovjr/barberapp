@@ -113,6 +113,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
             decoration: const InputDecoration(
               labelText: 'Price',
             ),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             controller: _priceController,
             validator: (value) {
               if (value!.isEmpty) {

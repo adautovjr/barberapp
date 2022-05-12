@@ -23,7 +23,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Service'),
+        title: const Text('Create Request'),
       ),
       drawer: const Menu(),
       floatingActionButton: FloatingActionButton(
