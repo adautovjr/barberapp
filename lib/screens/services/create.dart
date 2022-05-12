@@ -70,7 +70,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
           variables: {
             'data': {
               'name': name,
-              'price': price,
+              'price': price.toString(),
               'duration': duration,
             }
           },
