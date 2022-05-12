@@ -64,7 +64,49 @@ class _ServicesScreenState extends State<ServicesScreen> {
                       itemBuilder: (context, index) {
                         final service = services[index];
 
-                        return Text(service['name'] ?? '');
+                        return GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            padding: const EdgeInsets.fromLTRB(25, 5, 25, 0),
+                            width: 1,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              elevation: 3,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Text(
+                                            service['name'] ?? '',
+                                            style:
+                                                const TextStyle(fontSize: 20),
+                                          ),
+                                        ),
+                                        flex: 2,
+                                      ),
+                                      Expanded(
+                                        child: IconButton(
+                                          icon: const Icon(Icons.open_in_new),
+                                          color: Colors.black26,
+                                          onPressed: () {},
+                                        ),
+                                        flex: 1,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
                       }),
                 ),
               )

@@ -19,4 +19,5 @@ Map<String, Widget Function(BuildContext)> routes = <String, WidgetBuilder>{
   '/service/create': (BuildContext context) => const CreateServiceScreen(),
   // Request
   '/requests': (BuildContext context) => const RequestsScreen(),
+  '/requests/create': (BuildContext context) => const CreateServiceScreen(),
 };

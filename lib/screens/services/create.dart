@@ -70,7 +70,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
           variables: {
             'data': {
               'name': name,
-              'price': price.toString(),
+              'price': price,
               'duration': duration,
             }
           },
@@ -113,6 +113,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
             decoration: const InputDecoration(
               labelText: 'Price',
             ),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             controller: _priceController,
             validator: (value) {
               if (value!.isEmpty) {
