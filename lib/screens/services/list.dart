@@ -96,7 +96,12 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                         child: IconButton(
                                           icon: const Icon(Icons.open_in_new),
                                           color: Colors.black26,
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.of(context).pushNamed(
+                                              '/service/details',
+                                              arguments: service,
+                                            );
+                                          },
                                         ),
                                         flex: 1,
                                       ),

@@ -18,12 +18,12 @@ class _RequestsScreenState extends State<RequestsScreen> {
         title: const Text('Requests'),
       ),
       drawer: const Menu(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed('/requests/create');
-        },
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.of(context).pushNamed('/requests/create');
+      //   },
+      //   child: const Icon(Icons.add),
+      // ),
       body: Query(
         options: QueryOptions(
           document: gql(

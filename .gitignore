@@ -45,7 +45,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-#Others
+# Others
 /windows
 /web
 /test
