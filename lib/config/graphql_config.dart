@@ -4,7 +4,7 @@ import "package:graphql_flutter/graphql_flutter.dart";
 class GraphQLConfig {
   static String token = "your can get it from a secured storage";
   static HttpLink httpLink = HttpLink(
-    'http://localhost:3000/graphql',
+    'http://152.67.44.191:3000/graphql',
   );
 
   ///if you want to pass token

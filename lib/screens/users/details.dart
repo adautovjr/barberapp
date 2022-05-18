@@ -16,8 +16,10 @@ class UserDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Nome:\n${user['name']}",
-                style: const TextStyle(fontSize: 20)),
+            Text(
+              "Nome:\n${user['name']}",
+              style: const TextStyle(fontSize: 20),
+            ),
           ],
         ),
       ),
