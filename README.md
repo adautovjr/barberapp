@@ -2,6 +2,11 @@
 
 Flutter app for barber shop's schedule management
 
+## Note:
+- You can take a look at the mobile app in the `stag/mobile` branch on this same repo.
+- You can take a look at the backend code in the `stag/backend` branch on this same repo.
+
+
 ## Prerequisites
 
 - Flutter
