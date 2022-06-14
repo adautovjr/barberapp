@@ -1,7 +1,9 @@
+import 'package:barber_flutter/controller/session.dart';
 import 'package:barber_flutter/graphql/query.dart';
 import 'package:barber_flutter/widgets/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:provider/provider.dart';
 
 class UsersScreen extends StatefulWidget {
   const UsersScreen({Key? key}) : super(key: key);
@@ -11,11 +13,51 @@ class UsersScreen extends StatefulWidget {
 }
 
 class _UsersScreenState extends State<UsersScreen> {
+  Future<void> _ShowDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return Consumer<SessionController>(
+          builder: (context, session, child) {
+            return AlertDialog(
+              title: const Text('Our consumer'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text('Hello, ${session.username}'),
+                    const Text('Would you like to approve of this message?'),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Ok'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Users'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              _ShowDialog();
+            },
+          ),
+        ],
       ),
       drawer: const Menu(),
       floatingActionButton: FloatingActionButton(

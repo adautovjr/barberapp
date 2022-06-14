@@ -1,4 +1,6 @@
+import 'package:barber_flutter/controller/session.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);
@@ -9,16 +11,20 @@ class Menu extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          const DrawerHeader(
-            decoration: BoxDecoration(
+          DrawerHeader(
+            decoration: const BoxDecoration(
               color: Colors.blue,
             ),
-            child: Text(
-              'Menu options',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
+            child: Consumer<SessionController>(
+              builder: (context, session, child) {
+                return Text(
+                'Welcome, ${session.username}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                );
+              },
             ),
           ),
           ListTile(

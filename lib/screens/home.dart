@@ -1,5 +1,7 @@
+import 'package:barber_flutter/controller/session.dart';
 import 'package:barber_flutter/widgets/menu.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class Home extends StatefulWidget {
@@ -18,17 +20,22 @@ class _HomeState extends State<Home> {
       ),
       drawer: const Menu(),
       body: Center(
-        child: Text(
-          "Web: ${UniversalPlatform.isWeb} \n"
-          "MacOS: ${UniversalPlatform.isMacOS} \n"
-          "Windows: ${UniversalPlatform.isWindows} \n"
-          "Linux: ${UniversalPlatform.isLinux} \n"
-          "Android: ${UniversalPlatform.isAndroid} \n"
-          "IOS: ${UniversalPlatform.isIOS} \n"
-          "Fuschia: ${UniversalPlatform.isFuchsia} \n",
-          style: Theme.of(context).textTheme.headline6,
-        ),
-      ),
+        child: Consumer<SessionController>(
+          builder: (context, session, child) {
+            return Text(
+              "USER: ${session.username} \n"
+              "Web: ${UniversalPlatform.isWeb} \n"
+              "MacOS: ${UniversalPlatform.isMacOS} \n"
+              "Windows: ${UniversalPlatform.isWindows} \n"
+              "Linux: ${UniversalPlatform.isLinux} \n"
+              "Android: ${UniversalPlatform.isAndroid} \n"
+              "IOS: ${UniversalPlatform.isIOS} \n"
+              "Fuschia: ${UniversalPlatform.isFuchsia} \n",
+              style: Theme.of(context).textTheme.headline6,
+            );
+          }
+       ),
+      )
     );
   }
 }
