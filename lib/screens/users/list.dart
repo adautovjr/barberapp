@@ -50,6 +50,7 @@ class _UsersScreenState extends State<UsersScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Users'),
+        backgroundColor: Theme.of(context).backgroundColor,
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -64,6 +65,7 @@ class _UsersScreenState extends State<UsersScreen> {
         onPressed: () {
           Navigator.of(context).pushNamed('/user/create');
         },
+        backgroundColor: Theme.of(context).backgroundColor,
         child: const Icon(Icons.add),
       ),
       body: Query(

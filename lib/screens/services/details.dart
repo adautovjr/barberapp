@@ -10,6 +10,7 @@ class ServiceDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detalhes do Serviço'),
+        backgroundColor: Theme.of(context).backgroundColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),

@@ -16,9 +16,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Services'),
+        backgroundColor: Theme.of(context).backgroundColor,
       ),
       drawer: const Menu(),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).backgroundColor,
         onPressed: () {
           Navigator.of(context).pushNamed('/service/create');
         },

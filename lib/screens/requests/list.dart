@@ -16,9 +16,11 @@ class _RequestsScreenState extends State<RequestsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Requests'),
+        backgroundColor: Theme.of(context).backgroundColor,
       ),
       drawer: const Menu(),
       // floatingActionButton: FloatingActionButton(
+      // backgroundColor: Theme.of(context).backgroundColor,
       //   onPressed: () {
       //     Navigator.of(context).pushNamed('/requests/create');
       //   },

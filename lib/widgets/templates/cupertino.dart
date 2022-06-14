@@ -5,7 +5,7 @@ Widget cupertinoWidget(BuildContext context, String title) {
   return CupertinoApp(
     title: title,
     // theme: ThemeData(
-    //   primarySwatch: Colors.blue,
+    //   primarySwatch: Colors.teal,
     // ),
     initialRoute: '/',
     routes: routes,

@@ -27,9 +27,11 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create User'),
+        backgroundColor: Theme.of(context).backgroundColor,
       ),
       drawer: const Menu(),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).backgroundColor,
         onPressed: () {
           if (_formKey.currentState!.validate()) {
             // If the form is valid, display a Snackbar.

@@ -15,8 +15,9 @@ class _LoginState extends State<LoginScreen> {
   var password = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Padding(
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      body: Padding(
         padding: const EdgeInsets.all(20),
         child: Center(
           child: Column(
@@ -42,27 +43,25 @@ class _LoginState extends State<LoginScreen> {
                         children: <Widget>[
                           TextField(
                             controller: user,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'User',
                             ),
                           ),
                           TextField(
                             controller: password,
                             obscureText: true,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Password',
                             ),
                           ),
-                          Container(
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  Provider.of<SessionController>(context,
-                                          listen: false)
-                                      .login(user.text, password.text);
-                                  Navigator.of(context).pushNamed('/home');
-                                },
-                                child: const Text('Login')),
-                          )
+                          ElevatedButton(
+                              onPressed: () {
+                                Provider.of<SessionController>(context,
+                                        listen: false)
+                                    .login(user.text, password.text);
+                                Navigator.of(context).pushNamed('/home');
+                              },
+                              child: const Text('Login')),
                         ],
                       ),
                     ),

@@ -15,13 +15,14 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Barber App'),
-      ),
-      drawer: const Menu(),
-      body: Center(
-        child: Consumer<SessionController>(
-          builder: (context, session, child) {
+        appBar: AppBar(
+          title: const Text('Barber App'),
+          backgroundColor: Theme.of(context).backgroundColor,
+        ),
+        drawer: const Menu(),
+        body: Center(
+          child:
+              Consumer<SessionController>(builder: (context, session, child) {
             return Text(
               "USER: ${session.username} \n"
               "Web: ${UniversalPlatform.isWeb} \n"
@@ -33,9 +34,7 @@ class _HomeState extends State<Home> {
               "Fuschia: ${UniversalPlatform.isFuchsia} \n",
               style: Theme.of(context).textTheme.headline6,
             );
-          }
-       ),
-      )
-    );
+          }),
+        ));
   }
 }

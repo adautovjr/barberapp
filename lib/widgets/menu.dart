@@ -12,13 +12,13 @@ class Menu extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            decoration: const BoxDecoration(
-              color: Colors.blue,
+            decoration: BoxDecoration(
+              color: Theme.of(context).backgroundColor,
             ),
             child: Consumer<SessionController>(
               builder: (context, session, child) {
                 return Text(
-                'Welcome, ${session.username}',
+                  'Welcome, ${session.username}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,

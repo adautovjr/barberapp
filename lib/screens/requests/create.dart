@@ -24,9 +24,11 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Request'),
+        backgroundColor: Theme.of(context).backgroundColor,
       ),
       drawer: const Menu(),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).backgroundColor,
         onPressed: () {
           if (_formKey.currentState!.validate()) {
             // If the form is valid, display a Snackbar.

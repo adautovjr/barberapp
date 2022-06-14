@@ -9,6 +9,7 @@ class UserDetailPage extends StatelessWidget {
     final user = ModalRoute.of(context)?.settings.arguments as Map;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).backgroundColor,
         title: const Text('Detalhes do Usuário'),
       ),
       body: Padding(
