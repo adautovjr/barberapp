@@ -24,21 +24,22 @@ class _LoginState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'El Barbero',
+                'El Barbero 💈',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w500,
+                  color: Colors.white,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: SizedBox(
-                  height: 300,
+                  height: 230,
                   child: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     child: Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: ListView(
                         children: <Widget>[
                           TextField(
@@ -53,6 +54,9 @@ class _LoginState extends State<LoginScreen> {
                             decoration: const InputDecoration(
                               labelText: 'Password',
                             ),
+                          ),
+                          const SizedBox(
+                            height: 20,
                           ),
                           ElevatedButton(
                               onPressed: () {

@@ -53,7 +53,7 @@ class _UsersScreenState extends State<UsersScreen> {
         backgroundColor: Theme.of(context).backgroundColor,
         actions: [
           IconButton(
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.account_circle_rounded),
             onPressed: () {
               _ShowDialog();
             },
