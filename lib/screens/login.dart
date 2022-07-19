@@ -42,30 +42,41 @@ class _LoginState extends State<LoginScreen> {
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: ListView(
                         children: <Widget>[
-                          TextField(
-                            controller: user,
-                            decoration: const InputDecoration(
-                              labelText: 'User',
-                            ),
+                          Column(
+                            children: [
+                              TextField(
+                                controller: user,
+                                decoration: const InputDecoration(
+                                  labelText: 'Email',
+                                ),
+                              ),
+                              TextField(
+                                controller: password,
+                                obscureText: true,
+                                decoration: const InputDecoration(
+                                  labelText: 'Password',
+                                ),
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Provider.of<SessionController>(context,
+                                            listen: false)
+                                        .login(user.text, password.text).then((value) => {
+                                          print(value),
+                                          if (value) {
+                                            Navigator.of(context).pushNamed('/home')
+                                          } else {
+                                            userNotFound()
+                                          }
+                                        });
+                                  },
+                                  child: const Text('Login'),
+                                ),
+                              ),
+                            ],
                           ),
-                          TextField(
-                            controller: password,
-                            obscureText: true,
-                            decoration: const InputDecoration(
-                              labelText: 'Password',
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          ElevatedButton(
-                              onPressed: () {
-                                Provider.of<SessionController>(context,
-                                        listen: false)
-                                    .login(user.text, password.text);
-                                Navigator.of(context).pushNamed('/home');
-                              },
-                              child: const Text('Login')),
                         ],
                       ),
                     ),
@@ -76,6 +87,33 @@ class _LoginState extends State<LoginScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> userNotFound() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Ops'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text("Well, looks like that user is not registered."),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

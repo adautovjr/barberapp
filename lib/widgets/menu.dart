@@ -15,16 +15,33 @@ class Menu extends StatelessWidget {
             decoration: BoxDecoration(
               color: Theme.of(context).backgroundColor,
             ),
-            child: Consumer<SessionController>(
-              builder: (context, session, child) {
-                return Text(
-                  'Welcome, ${session.username}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                );
-              },
+            child: Stack(
+              children: [
+                Consumer<SessionController>(
+                  builder: (context, session, child) {
+                    return Align(
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            child: ClipOval(
+                              child: session.image,
+                            ),
+                          ),
+                          Text(
+                            'Welcome, ${session.username}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
           ListTile(

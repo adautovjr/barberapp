@@ -39,7 +39,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
         builder: (QueryResult result,
             {VoidCallback? refetch, FetchMore? fetchMore}) {
           if (result.hasException) {
-            debugPrint(result.exception.toString());
+            // debugPrint(result.exception.toString());
             return Text(result.exception.toString());
           }
 

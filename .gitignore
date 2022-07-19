@@ -53,3 +53,5 @@ app.*.map.json
 /android
 /.vscode
 .metadata
+
+firebase_options.dart

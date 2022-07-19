@@ -82,7 +82,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
         debugPrint(result.exception.toString());
       } else if (result.data != null) {
         //  parse your response here and return
-        debugPrint(result.data!["createService"].toString());
+        // debugPrint(result.data!["createService"].toString());
         Service data = Service.fromJson(result.data!["createService"]);
         Navigator.of(context).pop(data);
       }

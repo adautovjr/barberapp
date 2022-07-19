@@ -1,10 +1,16 @@
+import 'dart:io';
+
 import 'package:barber_flutter/config/graphql_config.dart';
 import 'package:barber_flutter/graphql/mutation.dart';
 import 'package:barber_flutter/helpers/role_helper.dart';
 import 'package:barber_flutter/models/user.dart';
 import 'package:barber_flutter/widgets/menu.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+
+import '../../helpers/image_input_helper.dart';
 
 class CreateUserScreen extends StatefulWidget {
   const CreateUserScreen({Key? key}) : super(key: key);
@@ -22,6 +28,12 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
 
+  File? _pickedImage;
+
+  void _selectImage(File? pickedImage) {
+    _pickedImage = pickedImage;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,10 +48,12 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
           if (_formKey.currentState!.validate()) {
             // If the form is valid, display a Snackbar.
             createUser(
-                role: selectedRole!,
-                name: _nameController.text,
-                email: _emailController.text,
-                phone: _phoneController.text);
+              role: selectedRole!,
+              name: _nameController.text,
+              email: _emailController.text,
+              phone: _phoneController.text,
+              image: _pickedImage,
+            );
           } else {
             setState(() {
               _autovalidate = true;
@@ -57,12 +71,12 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
     );
   }
 
-  Future<String> createUser({
-    required String name,
-    required String role,
-    required String email,
-    required String phone,
-  }) async {
+  Future<String> createUser(
+      {required String name,
+      required String role,
+      required String email,
+      required String phone,
+      File? image}) async {
     try {
       ///initializing GraphQLConfig
       GraphQLConfig graphQLConfiguration = GraphQLConfig();
@@ -86,9 +100,10 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
         debugPrint(result.exception.toString());
       } else if (result.data != null) {
         //  parse your response here and return
-        debugPrint(result.data!["createUser"].toString());
-        User data = User.fromJson(result.data!["createUser"]);
-        Navigator.of(context).pop(data);
+        // (result.data!["createUser"].toString());
+        User user = User.fromJson(result.data!["createUser"]);
+        await _uploadUserImage(image, user.id);
+        Navigator.of(context).pop(user);
       }
 
       return "";
@@ -96,6 +111,15 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
       debugPrint(e.toString());
       return "";
     }
+  }
+
+  Future<String?> _uploadUserImage(File? image, String imageName) async {
+    if (image == null) return null;
+
+    final storage = FirebaseStorage.instance;
+    final imageRef = storage.ref().child('user_images').child(imageName);
+    await imageRef.putFile(image).whenComplete(() {});
+    return await imageRef.getDownloadURL();
   }
 
   _buildForm() {
@@ -148,6 +172,13 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
               }
               return null;
             },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 20,
+              bottom: 20,
+            ),
+            child: ImageInput(_selectImage),
           ),
         ],
       ),

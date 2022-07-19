@@ -32,3 +32,17 @@ String getRequestsQuery = """
     }
   }
 """;
+
+String findFirstUserQuery = """
+  query findFirst (
+    \$filter: UserWhereInput!
+  ) {
+    findFirstUser(where: \$filter) {
+      id
+      name
+      email
+      role
+      phone
+    }
+  }
+""";
